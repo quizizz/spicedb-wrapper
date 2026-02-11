@@ -221,6 +221,7 @@ export class AuthZed {
       params.token,
       params.host,
       params.security ?? AZClientSecurity.INSECURE_PLAINTEXT_CREDENTIALS,
+      undefined,
       params.grpcClientOptions || {},
     );
     this.logger = logger || new ConsoleLogger();
@@ -669,11 +670,13 @@ export class AuthZed {
   }
 
   registerWatchEventListener(params: RegisterWatchEventListenerParams): void {
+    const watchRequest = v1.WatchRequest.create({
+      optionalStartCursor: params.watchFromToken,
+      optionalObjectTypes: params.objectTypes ?? [],
+    });
+
     const watchStream = this._client.watch(
-      {
-        optionalStartCursor: params.watchFromToken,
-        optionalObjectTypes: params.objectTypes ?? [],
-      },
+      watchRequest,
       params.grpcMetadata || new grpc.Metadata(),
       params.grpcOptions || {},
     );
