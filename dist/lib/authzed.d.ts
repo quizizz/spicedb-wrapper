@@ -7,14 +7,14 @@ import { RelationshipUpdate_Operation as RelationshipUpdateOperation } from '@au
 import { EventEmitter } from 'node:events';
 import * as grpc from '@grpc/grpc-js';
 import { ILogger } from '../logger';
-declare type AuthZedClientParams = {
+type AuthZedClientParams = {
     host: string;
     token: string;
     security: AZClientSecurity;
     grpcClientOptions?: grpc.ClientOptions;
 };
-declare type ZedToken = v1.ZedToken;
-declare type RelationshipUpdate = v1.RelationshipUpdate;
+type ZedToken = v1.ZedToken;
+type RelationshipUpdate = v1.RelationshipUpdate;
 export { AZClientSecurity as ClientSecurity, ZedToken, RelationshipUpdate, RelationshipUpdateOperation, };
 export declare type PartialMessage<T extends object> = {
     [K in keyof T]?: PartialField<T[K]>;
@@ -24,7 +24,7 @@ declare type PartialField<T> = T extends Date | Uint8Array | bigint | boolean | 
 } ? T : T extends {
     oneofKind: undefined;
 } ? T : T extends object ? PartialMessage<T> : T;
-export declare type Consistency = {
+export type Consistency = {
     type: 'minimum-latency';
 } | {
     type: 'at-least-as-fresh';
@@ -32,7 +32,7 @@ export declare type Consistency = {
 } | {
     type: 'fully-consistent';
 };
-declare type CreateRelationParams = {
+type CreateRelationParams = {
     relation: string;
     resource: {
         id: string;
@@ -44,7 +44,7 @@ declare type CreateRelationParams = {
         subRelation?: string;
     };
 };
-declare type CheckPermissionParams = {
+type CheckPermissionParams = {
     permission: string;
     resource: {
         id: string;
@@ -59,7 +59,7 @@ declare type CheckPermissionParams = {
     grpcOptions?: grpc.CallOptions;
     grpcMetadata?: grpc.Metadata;
 };
-declare type ListResourcesAccessorCanAccessParams = {
+type ListResourcesAccessorCanAccessParams = {
     resourceType: string;
     accessor: {
         id: string;
@@ -71,7 +71,7 @@ declare type ListResourcesAccessorCanAccessParams = {
     grpcOptions?: grpc.CallOptions;
     grpcMetadata?: grpc.Metadata;
 };
-declare type ListAccessorsForResourceParams = {
+type ListAccessorsForResourceParams = {
     resource: {
         id: string;
         type: string;
@@ -83,22 +83,22 @@ declare type ListAccessorsForResourceParams = {
     grpcOptions?: grpc.CallOptions;
     grpcMetadata?: grpc.Metadata;
 };
-declare type ListResourcesAccessorCanAccessResponse = {
+type ListResourcesAccessorCanAccessResponse = {
     resourceId: string;
     zedToken?: string;
 }[];
-declare type ListAccessorsForResourceResponse = {
+type ListAccessorsForResourceResponse = {
     accessorId: string;
     zedToken?: string;
 }[];
-declare type RegisterWatchEventListenerParams = {
+type RegisterWatchEventListenerParams = {
     emitter: EventEmitter;
     watchFromToken?: ZedToken;
     objectTypes?: string[];
     grpcOptions?: grpc.CallOptions;
     grpcMetadata?: grpc.Metadata;
 };
-declare type ReadRelationshipsParams = {
+type ReadRelationshipsParams = {
     relation?: string;
     resource: {
         id?: string;
@@ -113,7 +113,7 @@ declare type ReadRelationshipsParams = {
     grpcOptions?: grpc.CallOptions;
     grpcMetadata?: grpc.Metadata;
 };
-declare type ReadRelationshipResponse = {
+type ReadRelationshipResponse = {
     zedToken: v1.ZedToken;
     resource: {
         type: string;
@@ -126,7 +126,7 @@ declare type ReadRelationshipResponse = {
     };
     relation: string;
 }[];
-declare type UpdateRelationsParams = {
+type UpdateRelationsParams = {
     updates: {
         operation: RelationshipUpdateOperation;
         relation: string;
@@ -143,7 +143,7 @@ declare type UpdateRelationsParams = {
     grpcOptions?: grpc.CallOptions;
     grpcMetadata?: grpc.Metadata;
 };
-declare type DeleteRelationsParams = {
+type DeleteRelationsParams = {
     resource: {
         id: string;
         type: string;
