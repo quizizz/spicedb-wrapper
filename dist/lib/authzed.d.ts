@@ -2,11 +2,13 @@
 /// <reference types="node" />
 import { Readable } from 'stream';
 import { v1 } from '@authzed/authzed-node';
-import { ClientSecurity as AZClientSecurity } from '@authzed/authzed-node/dist/src/util';
-import { RelationshipUpdate_Operation as RelationshipUpdateOperation } from '@authzed/authzed-node/dist/src/v1';
 import { EventEmitter } from 'node:events';
 import * as grpc from '@grpc/grpc-js';
 import { ILogger } from '../logger';
+declare const ClientSecurity: typeof v1.ClientSecurity;
+declare const RelationshipUpdateOperation: typeof v1.RelationshipUpdate_Operation;
+type AZClientSecurity = v1.ClientSecurity;
+type RelationshipUpdateOperationType = v1.RelationshipUpdate_Operation;
 type AuthZedClientParams = {
     host: string;
     token: string;
@@ -15,7 +17,7 @@ type AuthZedClientParams = {
 };
 type ZedToken = v1.ZedToken;
 type RelationshipUpdate = v1.RelationshipUpdate;
-export { AZClientSecurity as ClientSecurity, ZedToken, RelationshipUpdate, RelationshipUpdateOperation, };
+export { ClientSecurity, ZedToken, RelationshipUpdate, RelationshipUpdateOperation, };
 export declare type PartialMessage<T extends object> = {
     [K in keyof T]?: PartialField<T[K]>;
 };
@@ -128,7 +130,7 @@ type ReadRelationshipResponse = {
 }[];
 type UpdateRelationsParams = {
     updates: {
-        operation: RelationshipUpdateOperation;
+        operation: RelationshipUpdateOperationType;
         relation: string;
         accessor: {
             id: string;

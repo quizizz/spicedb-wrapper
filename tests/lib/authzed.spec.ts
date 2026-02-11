@@ -1,8 +1,8 @@
-import { ClientSecurity } from '@authzed/authzed-node/dist/src/util';
-import { RelationshipUpdate } from '@authzed/authzed-node/dist/src/v1';
 import { EventEmitter } from 'node:stream';
 import {
   AuthZed,
+  ClientSecurity,
+  RelationshipUpdate,
   RelationshipUpdateOperation,
   ZedToken,
 } from '../../src/lib/authzed';

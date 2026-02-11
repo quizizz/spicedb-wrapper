@@ -1,11 +1,17 @@
 import { Readable } from 'stream';
 import { v1 } from '@authzed/authzed-node';
-import { ClientSecurity as AZClientSecurity } from '@authzed/authzed-node/dist/src/util';
-import { RelationshipUpdate_Operation as RelationshipUpdateOperation } from '@authzed/authzed-node/dist/src/v1';
 import { EventEmitter } from 'node:events';
 import * as grpc from '@grpc/grpc-js';
 
 import { ConsoleLogger, ILogger } from '../logger';
+
+// Re-export enums as values (for runtime usage)
+const ClientSecurity = v1.ClientSecurity;
+const RelationshipUpdateOperation = v1.RelationshipUpdate_Operation;
+
+// Type aliases for type annotations
+type AZClientSecurity = v1.ClientSecurity;
+type RelationshipUpdateOperationType = v1.RelationshipUpdate_Operation;
 
 type AuthZedClientParams = {
   host: string;
@@ -18,7 +24,7 @@ type ZedToken = v1.ZedToken;
 type RelationshipUpdate = v1.RelationshipUpdate;
 
 export {
-  AZClientSecurity as ClientSecurity,
+  ClientSecurity,
   ZedToken,
   RelationshipUpdate,
   RelationshipUpdateOperation,
@@ -174,7 +180,7 @@ type ReadRelationshipResponse = {
 
 type UpdateRelationsParams = {
   updates: {
-    operation: RelationshipUpdateOperation;
+    operation: RelationshipUpdateOperationType;
     relation: string;
     accessor: {
       id: string;
@@ -220,7 +226,7 @@ export class AuthZed {
     this._client = v1.NewClient(
       params.token,
       params.host,
-      params.security ?? AZClientSecurity.INSECURE_PLAINTEXT_CREDENTIALS,
+      params.security ?? v1.ClientSecurity.INSECURE_PLAINTEXT_CREDENTIALS,
       undefined,
       params.grpcClientOptions || {},
     );
@@ -458,7 +464,7 @@ export class AuthZed {
           subject,
           resource: object,
         },
-        operation: RelationshipUpdateOperation.TOUCH,
+        operation: v1.RelationshipUpdate_Operation.TOUCH,
       };
     });
 
